@@ -97,10 +97,12 @@ Then configure a GitHub Actions Trusted Publisher in the package settings on npm
 
 | Setting | Value |
 | --- | --- |
-| Organization or user | `githubguy132010` |
+| Organization or user | `thomasbrugman` |
 | Repository | `pi-customizations` |
 | Workflow filename | `publish.yml` |
 | Allowed action | `npm publish` |
+
+After a GitHub account rename, update both this Trusted Publisher owner and the repository URLs in `package.json`; GitHub redirects do not update npm’s OIDC trust configuration. Leave the environment name empty for this workflow. The npm package scope remains `@thatrandomnerd69`.
 
 ### Automatic publication
 

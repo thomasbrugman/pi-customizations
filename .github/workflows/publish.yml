@@ -25,8 +25,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "24"
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
+
+      # OIDC needs npm >=11.5.1; avoid setup-node token-auth configuration.
+      - name: Verify publishing runtime
+        run: |
+          node --version
+          npm --version
+          node -e 'const [major, minor, patch] = process.argv[1].split(".").map(Number); if (major < 11 || (major === 11 && (minor < 5 || (minor === 5 && patch < 1)))) process.exit(1)' "$(npm --version)"
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -64,3 +70,10 @@ jobs:
       - name: Publish as latest
         if: steps.version.outputs.package_exists == 'true' && steps.version.outputs.exists == 'false'
         run: npm publish --tag latest --access public
+
+      - name: Verify published version
+        if: steps.version.outputs.package_exists == 'true'
+        env:
+          PUBLISHED_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          npm view "@thatrandomnerd69/pi-coding-agent@${PUBLISHED_VERSION}" version
