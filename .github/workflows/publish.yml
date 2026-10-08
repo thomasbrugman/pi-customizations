@@ -25,9 +25,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "24"
+          registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      # OIDC needs npm >=11.5.1; avoid setup-node token-auth configuration.
+      # Trusted Publishing requires npm >=11.5.1; no npm secret is needed.
       - name: Verify publishing runtime
         run: |
           node --version
