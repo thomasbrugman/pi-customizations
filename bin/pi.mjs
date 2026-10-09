@@ -31,4 +31,5 @@ process.title = "pi";
 process.env.PI_CODING_AGENT = "true";
 process.env.AI_AGENT = "pi";
 
-await main([...args, ...extensionArgs]);
+// This distribution is bash-only; CLI tool allowlists retain MCP tools in Pi 1.x.
+await main([...args, "--no-mcp", ...extensionArgs]);
