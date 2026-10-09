@@ -124,3 +124,5 @@ npm install --save-exact \
   @earendil-works/pi-tui@<version>
 npm run check
 ```
+
+The bundled CLI disables built-in MCP with `--no-mcp` to preserve its bash-only policy, including when servers connect after session startup. Extension tool calls remain guarded by `bash-only`.
